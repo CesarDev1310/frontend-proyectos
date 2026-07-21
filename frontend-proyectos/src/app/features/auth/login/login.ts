@@ -1,0 +1,50 @@
+import { Router } from '@angular/router';
+import { AuthService } from './../../../core/services/auth';
+import { Component, inject, signal } from '@angular/core';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+//import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-login',
+  imports: [ReactiveFormsModule],
+  templateUrl: './login.html',
+  styleUrl: './login.css',
+})
+export class Login {
+  private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+
+  readonly isLoading = signal<boolean>(false);
+  readonly errorMessage = signal<string | null>(null);
+
+  readonly loginForm = this.fb.nonNullable.group({
+    email:['', [Validators.required, Validators.email]],
+    password: ['',[Validators.required, Validators.minLength(6)]]
+  });
+
+  onSubmit():void{
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
+
+    this.isLoading.set(true);
+    this.errorMessage.set(null);
+
+    const credentials = this.loginForm.getRawValue();
+
+    this.authService.login(credentials).subscribe({
+      next:()=>{
+        this.router.navigate(['/projects/todos']);
+        this.isLoading.set(false);
+      },
+      error: (err) =>{
+        const msg = err.error?.message || "Se produjo un error en la autenticación";
+        this.errorMessage.set(msg);
+        this.isLoading.set(false);
+      }
+    });
+
+  }
+}
