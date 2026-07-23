@@ -2,12 +2,24 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
-        path: 'auth/login',
-        loadComponent: () => import('./features/auth/login/login')
-            .then(c=> c.Login)
+        path:'',
+        redirectTo:'projects',
+        pathMatch: 'full'
+
     },
     {
-        path:'',
-        redirectTo: 'auth/login'
+        path:'**',
+        redirectTo: 'projects'
+    },
+    {
+        path: 'auth/login',
+        loadComponent: () => import('./features/auth/login/login').then(c=> c.Login)
     }
+    /*,
+    {
+        path:'projects',
+        canActivate:[authGuard],
+        loadComponent: () => import('./features/auth/login/login').then(c=> c.Login)  //Componente de Proyectos
+    }*/
+    
 ];

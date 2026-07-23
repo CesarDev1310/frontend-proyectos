@@ -1,3 +1,11 @@
+
+@if (isLoading()) {
+    <div style="background-color: red; width: max-content; height: max-content; ;">
+        loading...
+    </div>
+}
+
+
 <div class="container">
     <div class="">
         <h2>Acceso al portal de proyectos</h2>
@@ -16,8 +24,16 @@
                 <!--Correo-->
                 <div class="mb-3">
                     <label for="email" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control" id="email" placeholder="ejemplo@empresa.com"
-                        autocomplete="email" [class.is-invalid]="isFieldInvalid('email')">
+                    <input 
+                    type="email" 
+                    class="form-control" 
+                    formControlName = "email"
+                    id="email" 
+                    placeholder="ejemplo@empresa.com"
+                    autocomplete="email" 
+                    [class.is-invalid]="isFieldInvalid('email')"
+                    >
+
                     @if (hasFieldError('email', 'required')) {
                     <span class="alert alert-danger" role="alert">El correo es obligatorio</span>
                     }
@@ -30,8 +46,15 @@
                 <!--Password-->
                 <div class="mb-3">
                     <label for="password" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="password" placeholder="**************"
-                        autocomplete="current-password" [class.is-invalid]="isFieldInvalid('password')">
+                    <input 
+                    type="password" 
+                    class="form-control" 
+                    formControlName="password"
+                    id="password" 
+                    placeholder="**************"
+                    autocomplete="current-password" 
+                    [class.is-invalid]="isFieldInvalid('password')">
+
                     @if (hasFieldError('password', 'required')) {
                     <span class="alert alert-danger" role="alert">La contraseña es requerida</span>
                     }

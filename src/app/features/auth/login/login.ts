@@ -6,6 +6,7 @@ import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -36,6 +37,7 @@ export class Login {
 
     this.authService.login(credentials).subscribe({
       next:()=>{
+        console.log("Se direccionará al listado de proyectos")
         this.router.navigate(['/projects/todos']);
         this.isLoading.set(false);
       },
