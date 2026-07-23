@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="card">
+    <div class="">
         <h2>Acceso al portal de proyectos</h2>
         <p class="subtitle">Ingresa tus credenciales para continuar</p>
 
@@ -10,7 +10,47 @@
         </div>
         }
 
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
+            <div class="form-group">
+                <!--Correo-->
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="email" placeholder="ejemplo@empresa.com"
+                        autocomplete="email" [class.is-invalid]="isFieldInvalid('email')">
+                    @if (hasFieldError('email', 'required')) {
+                    <span class="alert alert-danger" role="alert">El correo es obligatorio</span>
+                    }
+
+                    @if (hasFieldError('email', 'email')) {
+                    <span class="alert alert-danger" role="alert">Formato de correo no valido</span>
+                    }
+                </div>
+
+                <!--Password-->
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" placeholder="**************"
+                        autocomplete="current-password" [class.is-invalid]="isFieldInvalid('password')">
+                    @if (hasFieldError('password', 'required')) {
+                    <span class="alert alert-danger" role="alert">La contraseña es requerida</span>
+                    }
+
+                    @if (hasFieldError('password', 'minlength')) {
+                    <span class="alert alert-danger" role="alert">la contraseña debe tener al menos 6 caracteres</span>
+                    }
+                </div>
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-primary btn-sm"
+                [disabled]="loginForm.invalid || isLoading()"
+            >
+                {{ isLoading() ? 'Autenticando...' : 'Inciar Sesión'}}
+            </button>
+
+        </form>
 
     </div>
 </div>

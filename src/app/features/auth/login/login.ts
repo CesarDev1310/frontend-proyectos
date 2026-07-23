@@ -47,4 +47,15 @@ export class Login {
     });
 
   }
+
+  isFieldInvalid(field: 'email' |'password') : boolean{
+    const control = this.loginForm.controls[field];
+    return control.invalid && control.touched
+  }
+
+
+  hasFieldError(field: 'email' |'password', errorType:string) : boolean{
+    const control = this.loginForm.controls[field];
+    return control.hasError(errorType) && control.touched
+  }
 }
